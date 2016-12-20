@@ -1,7 +1,7 @@
 import java.util.BitSet;
 import java.util.Random;
 
-class BloomFilter {
+public class BloomFilter {
   private BitSet hashes;
   private int k;
 
