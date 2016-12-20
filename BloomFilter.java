@@ -1,11 +1,22 @@
+import java.util.BitSet;
+import java.util.Random;
+
 class BloomFilter {
-  private int hashes = 0;
+  private BitSet hashes;
+  private int k;
+
+  public BloomFilter(int k) {
+    this.k = k;
+    this.hashes = new BitSet();
+  }
 
   /**
   * Add an element to the container
   **/
   public void add(Object o) {
-    hashes |= o.hashCode();
+    Random prng = new Random(o.hashCode());
+    for (int i=0; i<k; i++)
+      hashes.set(prng.nextInt());
   }
 
   /** 
@@ -13,7 +24,10 @@ class BloomFilter {
   * May return true or false if the element is not in the container
   **/
   public boolean contains(Object o) {
-    int h = o.hashCode();
-    return ((h & hashes) == h);
+    Random prng = new Random(o.hashCode());
+    for (int i=0; i<k; i++)
+      if (!hashes.get(prng.nextInt()))
+        return false;
+    return true;
   }
 }
