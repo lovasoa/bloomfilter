@@ -19,7 +19,7 @@ It doesn't do any allocation when adding new elements or checking if an element 
 BloomFilter f = new BloomFilter(100, 1024);
 
 // Add elements to the filter
-// (it uses Object.hashCode() internally, so you can add objects of any type
+// it uses Object.hashCode() internally, so you can add objects of any type
 f.add("hello");
 
 // Check if an element is in the filter
