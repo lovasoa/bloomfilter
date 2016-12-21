@@ -1,22 +1,38 @@
 import java.util.BitSet;
 import java.util.Random;
+import java.util.Iterator;
 
 public class BloomFilter {
   private BitSet hashes;
+  private RandomInRange prng;
   private int k;
+  static final double ln2 = 0.6931471805599453; // ln(2)
 
-  public BloomFilter(int k) {
-    this.k = k;
+  /**
+   * Create a new bloom filter
+   * @param n Expected number of elements
+   * @param m Desired size of the container in bits
+   **/
+  public BloomFilter(int n, int m) {
+    this.k = (int) (ln2 * m / n);
     this.hashes = new BitSet();
+    this.prng = new RandomInRange(m, k);
+  }
+
+  /**
+   * Create a bloom filter of 1Kib
+   * @param n Expected number of elements
+   **/
+  public BloomFilter(int n) {
+    this(n, 8192);
   }
 
   /**
   * Add an element to the container
   **/
   public void add(Object o) {
-    Random prng = new Random(o.hashCode());
-    for (int i=0; i<k; i++)
-      hashes.set(prng.nextInt());
+    prng.init(o);
+    for (RandomInRange r : prng) hashes.set(r.value);
   }
 
   /** 
@@ -24,10 +40,43 @@ public class BloomFilter {
   * May return true or false if the element is not in the container
   **/
   public boolean contains(Object o) {
-    Random prng = new Random(o.hashCode());
-    for (int i=0; i<k; i++)
-      if (!hashes.get(prng.nextInt()))
+    prng.init(o);
+    for (RandomInRange r : prng)
+      if (!hashes.get(r.value))
         return false;
     return true;
   }
+
+  private class RandomInRange
+      implements Iterable<RandomInRange>, Iterator<RandomInRange> {
+
+    private Random prng;
+    private int max; // Maximum value returned + 1
+    private int count; // Number of random elements to generate
+    private int i = 0; // Number of elements generated
+    public int value; // The current value
+
+    RandomInRange(int maximum, int k) {
+      max = maximum;
+      count = k;
+      prng = new Random();
+    }
+    public void init(Object o) {
+      prng.setSeed(o.hashCode());
+    }
+    public Iterator<RandomInRange> iterator() {
+      i = 0;
+      return this;
+    }
+    public RandomInRange next() {
+      i++;
+      value = prng.nextInt() % max;
+      if (value<0) value = -value;
+      return this;
+    }
+    public boolean hasNext() {
+      return i < count;
+    }
+  }
 }
+
