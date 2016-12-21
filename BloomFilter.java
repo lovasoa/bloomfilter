@@ -6,7 +6,7 @@ public class BloomFilter {
   private BitSet hashes;
   private RandomInRange prng;
   private int k;
-  static final double ln2 = 0.6931471805599453; // ln(2)
+  private static final double ln2 = 0.6931471805599453; // ln(2)
 
   /**
    * Create a new bloom filter
