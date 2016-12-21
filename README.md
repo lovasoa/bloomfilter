@@ -10,7 +10,7 @@ Simplistic implementation of a fixed-size container that can contain any number 
 It doesn't use any fancy hash function. It uses `object.hashCode()` instead. You can override your objects' `.hashCode`method if you want better hashes.
 
 #### No allocation
-It doesn't to any allocation when adding new elements or checking if an element is present. It should thus be faster than other implementations.
+It doesn't do any allocation when adding new elements or checking if an element is present. It should thus be faster than other implementations.
 
 ## How to use
 
