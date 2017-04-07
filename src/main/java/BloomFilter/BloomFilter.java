@@ -14,17 +14,18 @@ public class BloomFilter {
    * @param m Desired size of the container in bits
    **/
   public BloomFilter(int n, int m) {
-    this.k = (int) (ln2 * m / n);
-    this.hashes = new BitSet();
+    k = (int) Math.round(ln2 * m / n);
+    if (k <= 0) k = 1;
+    this.hashes = new BitSet(m);
     this.prng = new RandomInRange(m, k);
   }
 
   /**
-   * Create a bloom filter of 1Kib
+   * Create a bloom filter of 1Mib
    * @param n Expected number of elements
    **/
   public BloomFilter(int n) {
-    this(n, 8192);
+    this(n, 1024*1024*8);
   }
 
   /**
