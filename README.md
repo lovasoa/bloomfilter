@@ -34,24 +34,24 @@ It tests the implementation with a Bloom filter containing randomly generated in
 Here are the results it gives on my laptop (*Intel(R) Core(TM) i7-4600M CPU @ 2.90GHz*) :
 ```
 $ java -jar build/BloomFilterTest.jar 10000000 100000000
-Testing a bloom filter containing n=10000000 elements in a bit array of m=100000000 bits (=11,9Mib) 
+Testing a bloom filter containing n=10000000 elements in a bit array of m=100000000 bits (=11.9Mib) 
 
 Testing correctness.
 Creating a filter, a set, and filling them...
-Elements incorrectly found to be inside:    81037/10000000 (0,81%)
+Elements incorrectly found to be inside:    81037/10000000 (0.81%)
 done.
 
 Testing insertion speed...
 Inserted 10000000 elements in 4065424530 ns.
-Insertion speed: 2,45977e+06 elements/second
+Insertion speed: 2.45977e+06 elements/second
 
 Testing query speed...
 Queried 10000000 elements in 2792302842 ns.
-Query speed: 3,58127e+06 elements/second
+Query speed: 3.58127e+06 elements/second
 
 ```
 
 We see that:
-  * The implementation chooses an optimal number of hash functions: the error rate is `p=exp(-ln(2)^2 * m/n)`
+  * The implementation is correct: the error rate is `p=exp(-ln(2)^2 * m/n)`
   * It is quite fast. It can insert and delete around **2 million elements per second**.
  
