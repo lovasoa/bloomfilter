@@ -48,6 +48,10 @@ public class BloomFilter {
     return true;
   }
 
+  public void clear() {
+    hashes.clear();
+  }
+
   private class RandomInRange
       implements Iterable<RandomInRange>, Iterator<RandomInRange> {
 

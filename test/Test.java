@@ -12,7 +12,8 @@ public class Test {
     // initialization
     System.out.println("Testing correctness.\n"+
         "Creating a filter, a set, and filling them...");
-    Set<Integer> inside = new HashSet<>(); 
+    filter.clear();
+    Set<Integer> inside = new HashSet<>((int)(bitsize / 0.75)); 
     while(inside.size() < elements) {
       int v = prng.nextInt();
       inside.add(v);
@@ -41,6 +42,7 @@ public class Test {
   static void testInsertion() {
     System.out.println("Testing insertion speed...");
 
+    filter.clear();
     long start = bean.getCurrentThreadCpuTime();
     for(int i=0; i<elements; i++) filter.add(prng.nextInt());
     long end = bean.getCurrentThreadCpuTime();
@@ -57,6 +59,8 @@ public class Test {
 
   static void testQuery() {
     System.out.println("Testing query speed...");
+
+    filter.clear();
     for(int i=0; i<elements; i++) filter.add(prng.nextInt());
 
     boolean xor = true; // Make sure our result isn’t optimized out
@@ -86,8 +90,12 @@ public class Test {
     prng = new Random();
     prng.setSeed(0);
     filter = new BloomFilter(elements, bitsize);
+
     testCorrectness();
+    
     testInsertion();
+    
     testQuery();
+
   }
 }
