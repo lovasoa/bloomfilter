@@ -33,7 +33,6 @@ It tests the implementation with a Bloom filter containing randomly generated in
 
 Here are the results it gives on my laptop (*`Core i7-4600M CPU @ 2.90GHz`*) with a set of 10 million integers added to a 10 Mib Bloom filter:
 ```
-$ java -jar build/BloomFilterTest.jar 10000000 80000000
 Testing a bloom filter containing n=10000000 elements in a bit array of m=80000000 bits (=9.5Mib) 
 
 Testing correctness.
