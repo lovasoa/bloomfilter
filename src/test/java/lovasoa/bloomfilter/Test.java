@@ -1,45 +1,65 @@
+package lovasoa.bloomfilter;
+
 import java.util.*;
+import java.lang.*;
 import java.lang.management.*;
 
 public class Test {
-  static int elements =  1_000_000;
-  static int bitsize  = 10_000_000;
-  static BloomFilter filter;
-  static Random prng;
-  static ThreadMXBean bean;
+  int elements =  1_000_000;
+  int bitsize  = 10_000_000;
+  BloomFilter filter;
+  Random prng;
+  ThreadMXBean bean;
 
-  static void testCorrectness() {
-    // initialization
+  public Test() {
+    System.out.format(
+        "Testing a bloom filter containing n=%d elements" +
+        " in a bit array of m=%d bits (=%.1fMib) \n\n",
+        elements, bitsize, ((float)bitsize/(1024*1024*8))
+    );
+    bean = ManagementFactory.getThreadMXBean();
+    prng = new Random();
+    prng.setSeed(0);
+    filter = new BloomFilter(elements, bitsize);
+  }
+
+  public void testCorrectness() {
     System.out.println("Testing correctness.\n"+
-        "Creating a filter, a set, and filling them...");
+        "Creating a Set and filling it together with our filter...");
     filter.clear();
-    Set<Integer> inside = new HashSet<>((int)(bitsize / 0.75)); 
+    Set<Integer> inside = new HashSet<>((int)(elements / 0.75)); 
     while(inside.size() < elements) {
       int v = prng.nextInt();
       inside.add(v);
       filter.add(v);
+      assert filter.contains(v) : "There should be no false negative";
     }
 
     // testing
     int found = 0, total = 0;
+    double rate = 0;
     while (total < elements) {
       int v = prng.nextInt();
       if (inside.contains(v)) continue;
       total++;
       found += filter.contains(v) ? 1 : 0;
 
+      rate = (float) found / total;
       if (total % 1000 == 0 || total == elements) {
         System.out.format(
             "\rElements incorrectly found to be inside: %8d/%-8d (%3.2f%%)",
-            found, total,
-            ((float)100*found/total)
+            found, total, 100*rate
         );
       }
     }
-    System.out.println("\ndone.\n");
+    System.out.println("\n");
+  
+    double ln2 = Math.log(2);
+    double expectedRate = Math.exp(-ln2*ln2 * bitsize / elements);
+    assert rate <= expectedRate * 1.10 : "error rate p = e^(-ln2^2*m/n)";
   }
 
-  static void testInsertion() {
+  public void testInsertion() {
     System.out.println("Testing insertion speed...");
 
     filter.clear();
@@ -57,7 +77,7 @@ public class Test {
     );
   }
 
-  static void testQuery() {
+  public void testQuery() {
     System.out.println("Testing query speed...");
 
     filter.clear();
@@ -79,23 +99,11 @@ public class Test {
   }
 
   public static void main(String[] args) {
-    if (args.length >= 1) elements = Integer.parseInt(args[0]);
-    if (args.length >= 2) bitsize = Integer.parseInt(args[1]);
-    System.out.format(
-        "Testing a bloom filter containing n=%d elements" +
-        " in a bit array of m=%d bits (=%.1fMib) \n\n",
-        elements, bitsize, ((float)bitsize/(1024*1024*8))
-    );
-    bean = ManagementFactory.getThreadMXBean();
-    prng = new Random();
-    prng.setSeed(0);
-    filter = new BloomFilter(elements, bitsize);
-
-    testCorrectness();
-    
-    testInsertion();
-    
-    testQuery();
-
+    Test test = new Test();
+    if (args.length >= 1) test.elements = Integer.parseInt(args[0]);
+    if (args.length >= 2) test.bitsize = Integer.parseInt(args[1]);
+    test.testCorrectness();
+    test.testInsertion();
+    test.testQuery();
   }
 }

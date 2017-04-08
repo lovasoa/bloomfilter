@@ -1,3 +1,5 @@
+package lovasoa.bloomfilter;
+
 import java.util.BitSet;
 import java.util.Random;
 import java.util.Iterator;
@@ -6,7 +8,7 @@ public class BloomFilter {
   private BitSet hashes;
   private RandomInRange prng;
   private int k;
-  private static final double ln2 = 0.6931471805599453; // ln(2)
+  private static final double LN2 = 0.6931471805599453; // ln(2)
 
   /**
    * Create a new bloom filter
@@ -14,7 +16,7 @@ public class BloomFilter {
    * @param m Desired size of the container in bits
    **/
   public BloomFilter(int n, int m) {
-    k = (int) Math.round(ln2 * m / n);
+    k = (int) Math.round(LN2 * m / n);
     if (k <= 0) k = 1;
     this.hashes = new BitSet(m);
     this.prng = new RandomInRange(m, k);
@@ -38,7 +40,7 @@ public class BloomFilter {
 
   /** 
   * Returns true if the element is in the container
-  * May return true or false if the element is not in the container
+  * Returns false with a probability ≈ 1-e^(-ln(2)² * m/n) if the element is not in the container.
   **/
   public boolean contains(Object o) {
     prng.init(o);
@@ -48,6 +50,9 @@ public class BloomFilter {
     return true;
   }
 
+  /**
+   * Removes all of the elements from this filter.
+   **/
   public void clear() {
     hashes.clear();
   }
