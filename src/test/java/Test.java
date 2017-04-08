@@ -1,4 +1,4 @@
-package lovasoa.bloomfilter;
+package com.github.lovasoa.bloomfilter;
 
 import java.util.*;
 import java.lang.*;
