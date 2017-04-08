@@ -31,27 +31,28 @@ It doesn't do any allocation when adding new elements or checking if an element 
 A class is provided that helps making performance measurements: [`Test.java`](./test/Test.java).
 It tests the implementation with a Bloom filter containing randomly generated integers.
 
-Here are the results it gives on my laptop (*Intel(R) Core(TM) i7-4600M CPU @ 2.90GHz*) :
+Here are the results it gives on my laptop (*`Core i7-4600M CPU @ 2.90GHz`*) with a set of 10 million integers added to a 10 Mib Bloom filter:
 ```
-$ java -jar build/BloomFilterTest.jar 10000000 100000000
-Testing a bloom filter containing n=10000000 elements in a bit array of m=100000000 bits (=11.9Mib) 
+$ java -jar build/BloomFilterTest.jar 10000000 80000000
+Testing a bloom filter containing n=10000000 elements in a bit array of m=80000000 bits (=9,5Mib) 
 
 Testing correctness.
 Creating a filter, a set, and filling them...
-Elements incorrectly found to be inside:    81037/10000000 (0.81%)
+Elements incorrectly found to be inside:   215013/10000000 (2,15%)
 done.
 
 Testing insertion speed...
-Inserted 10000000 elements in 4065424530 ns.
-Insertion speed: 2.45977e+06 elements/second
+Inserted 10000000 elements in 3445388006 ns.
+Insertion speed: 2,90243e+06 elements/second
 
 Testing query speed...
-Queried 10000000 elements in 2792302842 ns.
-Query speed: 3.58127e+06 elements/second
-
+Queried 10000000 elements in 1537504033 ns.
+Query speed: 6,50405e+06 elements/second
 ```
 
 We see that:
   * The implementation is correct: the error rate is `p=exp(-ln(2)^2 * m/n)`
-  * It is quite fast. It can insert and delete around **2 million elements per second**.
+  * It is quite fast
+     * It can **insert** around **2 million elements per second**.
+     * It can **query** around **6 million elements per second**.
  
