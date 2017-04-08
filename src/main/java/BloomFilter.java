@@ -11,7 +11,7 @@ public class BloomFilter {
   private static final double LN2 = 0.6931471805599453; // ln(2)
 
   /**
-   * Create a new bloom filter
+   * Create a new bloom filter.
    * @param n Expected number of elements
    * @param m Desired size of the container in bits
    **/
@@ -23,7 +23,7 @@ public class BloomFilter {
   }
 
   /**
-   * Create a bloom filter of 1Mib
+   * Create a bloom filter of 1Mib.
    * @param n Expected number of elements
    **/
   public BloomFilter(int n) {
@@ -39,8 +39,9 @@ public class BloomFilter {
   }
 
   /** 
-  * Returns true if the element is in the container
-  * Returns false with a probability ≈ 1-e^(-ln(2)² * m/n) if the element is not in the container.
+  * Returns true if the element is in the container.
+  * Returns false with a probability ≈ 1-e^(-ln(2)² * m/n)
+  * if the element is not in the container.
   **/
   public boolean contains(Object o) {
     prng.init(o);
