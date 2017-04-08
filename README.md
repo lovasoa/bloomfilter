@@ -3,9 +3,11 @@
 [![Build Status](https://travis-ci.org/lovasoa/bloomfilter.svg?branch=master)](https://travis-ci.org/lovasoa/bloomfilter)
 [![Jitpack repository](https://jitpack.io/v/lovasoa/BloomFilter.svg)](https://jitpack.io/#lovasoa/BloomFilter)
 
-Simplistic implementation of a fixed-size container that can contain any number of elements.
- 
- See the [Wikipedia page for Bloom filters](https://en.wikipedia.org/wiki/Bloom_filter).
+A Bloom filter is a hashing based data structure for maintaining a set of items in limited memory, allowing false positives but no false negatives.
+
+This repository contains a simple but performant implementation of bloom filters in java.
+
+See the [Wikipedia page for Bloom filters](https://en.wikipedia.org/wiki/Bloom_filter).
 
 ## How to use
 ### Add the project to your dependencies
