@@ -34,20 +34,20 @@ It tests the implementation with a Bloom filter containing randomly generated in
 Here are the results it gives on my laptop (*`Core i7-4600M CPU @ 2.90GHz`*) with a set of 10 million integers added to a 10 Mib Bloom filter:
 ```
 $ java -jar build/BloomFilterTest.jar 10000000 80000000
-Testing a bloom filter containing n=10000000 elements in a bit array of m=80000000 bits (=9,5Mib) 
+Testing a bloom filter containing n=10000000 elements in a bit array of m=80000000 bits (=9.5Mib) 
 
 Testing correctness.
 Creating a filter, a set, and filling them...
-Elements incorrectly found to be inside:   215013/10000000 (2,15%)
+Elements incorrectly found to be inside:   215013/10000000 (2.15%)
 done.
 
 Testing insertion speed...
 Inserted 10000000 elements in 3445388006 ns.
-Insertion speed: 2,90243e+06 elements/second
+Insertion speed: 2.90243e+06 elements/second
 
 Testing query speed...
 Queried 10000000 elements in 1537504033 ns.
-Query speed: 6,50405e+06 elements/second
+Query speed: 6.50405e+06 elements/second
 ```
 
 We see that:
