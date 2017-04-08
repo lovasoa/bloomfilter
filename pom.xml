@@ -4,7 +4,7 @@
   <groupId>lovasoa.bloomfilter</groupId>
   <artifactId>bloom-filter</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>bloom-filter</name>
   <description>
     Simplistic implementation of a fixed-size datastructure
@@ -13,6 +13,18 @@
     in O(1) and with a good probability.
   </description>
   <url>https://github.com/lovasoa/BloomFilter</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/lovasoa/BloomFilter</url>
+    <connection>scm:git:git://github.com/lovasoa/BloomFilter.git</connection>
+    <developerConnection>scm:git:git@github.com:lovasoa/BloomFilter.git</developerConnection>
+  </scm>
   <properties>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
