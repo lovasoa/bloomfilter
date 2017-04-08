@@ -87,6 +87,9 @@ public class BloomFilter {
     public boolean hasNext() {
       return i < count;
     }
+    public void remove() {
+      throw new UnsupportedOperationException();
+    }
   }
 }
 
