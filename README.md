@@ -28,7 +28,7 @@ f.contains("hello"); // true
 f.contains("hello, world!"); // false
 ```
 ### Documentation
-Read [the full javadoc of the **BloomFilter** class](https://lovasoa.github.io/bloomfilter/apidocs/index.html).
+Read [the full javadoc of the **BloomFilter** class](https://lovasoa.github.io/bloomfilter/apidocs/com/github/lovasoa/bloomfilter/BloomFilter.html).
 
 ## Implementation details
 
