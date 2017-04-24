@@ -58,20 +58,31 @@ public class BloomFilter implements Cloneable {
     hashes.clear();
   }
 
+  /**
+   * Create a copy of the current filter
+   **/
   public BloomFilter clone() throws CloneNotSupportedException {
     return (BloomFilter) super.clone();
   }
 
+  /**
+   * Generate a unique hash representing the filter
+   **/
   public int hashCode() {
     return hashes.hashCode() ^ k;
   }
 
+  /**
+   * Test if the filters have equal bitsets.
+   * WARNING: two filters may contain the same elements, but not be equal
+   * (if the filters have different size for example).
+   */
   public boolean equals(BloomFilter other) {
     return this.hashes.equals(other.hashes) && this.k == other.k;
   }
 
   /**
-   * Merge another bloom filter into this one.
+   * Merge another bloom filter into the current one.
    * After this operation, the current bloom filter contains all elements in
    * other.
    **/
