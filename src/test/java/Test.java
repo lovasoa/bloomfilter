@@ -99,7 +99,7 @@ public class Test {
   }
 
   public void testMerge() throws CloneNotSupportedException {
-    System.out.println("Testing merge...");
+    System.out.print("Testing merge... ");
 
     filter.clear();
     BloomFilter filter2 = filter.clone();
@@ -117,6 +117,7 @@ public class Test {
     BloomFilter concat2 = filter2.clone();
     concat2.merge(filter);
     assert concat1.equals(concat2) : "a.merge(b) = b.merge(a)";
+    System.out.println("Done.\n");
   }
 
   public static void main(String[] args) {
