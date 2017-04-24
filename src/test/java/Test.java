@@ -98,6 +98,27 @@ public class Test {
     );
   }
 
+  public void testMerge() throws CloneNotSupportedException {
+    System.out.println("Testing merge...");
+
+    filter.clear();
+    BloomFilter filter2 = filter.clone();
+    for(int i=0; i<elements; i++) {
+      int a, b;
+      filter.add(a = prng.nextInt());
+      filter2.add(b = prng.nextInt());
+      BloomFilter concat = filter.clone();
+      concat.merge(filter2);
+      assert concat.contains(a) && concat.contains(b) :
+              "merged filters don't lose elements";
+    }
+    BloomFilter concat1 = filter.clone();
+    concat1.merge(filter2);
+    BloomFilter concat2 = filter2.clone();
+    concat2.merge(filter);
+    assert concat1.equals(concat2) : "a.merge(b) = b.merge(a)";
+  }
+
   public static void main(String[] args) {
     Test test = new Test();
     if (args.length >= 1) test.elements = Integer.parseInt(args[0]);

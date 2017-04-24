@@ -4,10 +4,10 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.Iterator;
 
-public class BloomFilter {
+public class BloomFilter implements Cloneable {
   private BitSet hashes;
   private RandomInRange prng;
-  private int k;
+  private int k; // Number of hash functions
   private static final double LN2 = 0.6931471805599453; // ln(2)
 
   /**
@@ -56,6 +56,30 @@ public class BloomFilter {
    **/
   public void clear() {
     hashes.clear();
+  }
+
+  public BloomFilter clone() throws CloneNotSupportedException {
+    return (BloomFilter) super.clone();
+  }
+
+  public int hashCode() {
+    return hashes.hashCode() ^ k;
+  }
+
+  public boolean equals(BloomFilter other) {
+    return this.hashes.equals(other.hashes) && this.k == other.k;
+  }
+
+  /**
+   * Merge another bloom filter into this one.
+   * After this operation, the current bloom filter contains all elements in
+   * other.
+   **/
+  public void merge(BloomFilter other) {
+    if (other.k != this.k || other.hashes.size() != this.hashes.size()) {
+      throw new IllegalArgumentException("Incompatible bloom filters");
+    }
+    this.hashes.or(other.hashes);
   }
 
   private class RandomInRange
