@@ -37,11 +37,12 @@ public class BloomFilter implements Cloneable {
     prng.init(o);
     for (RandomInRange r : prng) hashes.set(r.value);
   }
-
   /** 
-  * Returns true if the element is in the container.
-  * Returns false with a probability ≈ 1-e^(-ln(2)² * m/n)
-  * if the element is not in the container.
+  * If the element is in the container, returns true.
+  * If the element is not in the container, returns true with a probability ≈ e^(-ln(2)² * m/n), otherwise false.
+  * So, when m is large enough, the return value can be interpreted as:
+  *    - true  : the element is probably in the container
+  *    - false : the element is definitely not in the container
   **/
   public boolean contains(Object o) {
     prng.init(o);
